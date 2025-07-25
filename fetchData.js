@@ -31,7 +31,7 @@ export async function fetchData(countries, regions) {
 export async function fetchCountryByName(countryName) {
     try {
         showLoader();
-        const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(countryName)}?fullText=true&fields=name,flags,borders,population,region,subregion,capital,tld,currencies,languages`;
+        const url = `https://restcountries.com/v3.1/name/${countryName}?fullText=true&fields=name,flags,borders,population,region,subregion,capital,tld,currencies,languages`;
         const response = await fetch(url);
         if (!response.ok) throw new Error("Network response was not ok");
 
@@ -45,7 +45,7 @@ export async function fetchBordersCountries(countryName) {
     try {
         showLoader();
 
-        const url = `https://restcountries.com/v3.1/alpha/${encodeURIComponent(countryName)}`;
+        const url = `https://restcountries.com/v3.1/alpha/${countryName}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error("Network response was not ok");
 

@@ -62,7 +62,6 @@ body {
   padding: 4px;
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
   gap: 10px;
 }
 .textDescriptionDiv {
@@ -80,29 +79,18 @@ body {
   font-weight: 900;
 }
 .valueDescription {
-  font-family: 'Poppins', sans-serif;
-  margin-top: 3px;
-  display: inline-block;
-  justify-content: start;
-  white-space: nowrap;
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 100;
-}
-.divOverFlow {
-  margin-top: 3px;
-    font-size: 14px;
-  font-weight: 100;
-  font-family: 'Poppins', sans-serif;
   text-align: start;
+  justify-content: start;
+ white-space: nowrap;
+  flex-shrink: 0;
   display: flex;
-}
-.divOverFlow.expanded {
-  display: flex;
+  width: 250px;
   white-space: normal;
-  display: block;
   word-wrap: break-word;
+  font-size: 16px;
+  font-weight: 100;
 }
+
 .countryName {
   margin: 12px 0;
   padding: 4px;
@@ -131,9 +119,11 @@ body {
 .leftDescription,
 .rightDescription {
   display: inline-block;
-  flex: 1;
+  width: 380px;
+  /* flex: 1; */
 }
 .countryListDiv {
+  display: flex;
   background-color: var(--base-variant);
   flex-direction: column;
   width: 100vw;
@@ -141,12 +131,12 @@ body {
   overflow-y: auto;
 }
 .searchInput {
-  margin: 10px;
+  margin: 10px ;
   background-color: var(--base-color);
   color: var(--text-color);
   padding: 8px;
   width: 30%;
-  min-width: 200px;
+  min-width: 220px;
   font-size: 14px;
   border-radius: 4px;
   animation: fadeIn 0.5s ease-out;
@@ -158,14 +148,15 @@ body {
   box-shadow: 0 0 15px var(--search-color);
   border-color: var(--primary-color);
 }
-.findCountryDiv {
+.countrySearchContainer {
   margin-top: 60px;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
 .selectDiv {
-  margin: 10px;
+  margin: 10px 30px 10px 10px;
+
   height: 40px;
   width: 150px;
   background-color: var(--base-color);
@@ -183,22 +174,23 @@ body {
 .singleCountyBody {
   height: 100vh;
   width: 100%;
-  padding: 40px;
+  padding: 40px 40px 0 40px;
   background-color: var(--base-variant);
   color: var(--text-color);
   min-width: 300px;
   overflow-x: auto;
 }
-.leftRightDescription {
+.moreAboutCounty {
   justify-content: space-between;
   display: flex;
   flex-direction: row;
 }
 .countryDescriptionDiv {
+  
   padding: 1rem;
   text-align: start;
+  align-items: start;
   justify-content: start;
-  flex: 1;
 }
 .singleCountryDiv {
   display: flex;
@@ -225,11 +217,11 @@ body {
   background-color: #3d353d;
   box-shadow: 0 0 8px rgba(200, 220, 233, 0.4);
 }
-.countryButton {
+.borderCountryButton {
   margin: 0.3rem 0 0.3rem 0.8rem;
   font-size: 14px;
 }
-.countryButton:hover {
+.borderCountryButton:hover {
   transform: scale(1.1);
 }
 .borderCountriesDiv {
@@ -243,7 +235,7 @@ body {
 }
 .borderCountriesName {
   margin-bottom: 0.2rem;
-  margin-left: 0.4rem;
+  margin-left: 0.2rem;
   display: inline-flex;
   flex-wrap: wrap;
   text-align: center;
@@ -253,17 +245,24 @@ body {
   color: var(--text-color);
 }
 .countryDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+   /* justify-content: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
-  overflow: auto;
+  overflow: auto; */
+ 
 }
 .notFoundDiv {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
   justify-content: center;
   text-align: center;
   font-size: 20px;
@@ -305,13 +304,13 @@ body {
     transform: rotate(1turn);
   }
 }
-@media (max-width: 1280) {
-  .leftRightDescription {
+/* @media (max-width: 1280) {
+  .moreAboutCounty {
     flex-direction: column;
   }
-}
+} */
 @media (max-width: 800px) {
-  .singleCountryDiv {
+  .singleCountryDiv,.moreAboutCounty {
     flex-direction: column;
   }
   .imgCountryBig {
@@ -321,14 +320,6 @@ body {
     justify-content: start;
     width: 100%;
   }
-  .divOverFlow {
-  display: inline-block;
-  cursor: pointer;
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; 
-}
 }
 @media (max-width: 500px) {
   .navbar,
@@ -340,21 +331,19 @@ body {
     justify-items: center;
     align-items: center;
   }
-  .rightDescription {
-    padding-top: 0;
-  }
+ 
   .searchInput {
     width: 95%;
   }
-  .findCountryDiv,
-  .leftRightDescription {
+  .countrySearchContainer,
+  .moreAboutCounty {
     flex-direction: column;
   }
   .countryDescriptionDiv {
     padding: 0rem;
-    flex: 0;
+     flex: 1; 
   }
-  .backButton{
+  .backButton {
     margin-left: 10px;
   }
 }

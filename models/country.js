@@ -8,7 +8,7 @@ export class Country {
     this.nativeName = data.nativeName ?? null;
     this.population = data.population ?? null;
     this.region = data.region ?? null;
-    this.subregion = data.subregion ?? null;
+    this.subregion = data.subregion ?? "suuu";
     this.capital = data.capital ?? null;
     this.topLevelDomain = data.topLevelDomain ?? null;
 
@@ -40,20 +40,20 @@ export class Country {
     imgCountrySmall.src = this.flag;
     this.container.appendChild(imgCountrySmall);
 
-    const descriptionCountry = document.createElement("div");
-    descriptionCountry.className = "descriptionCountry";
-    descriptionCountry.style.marginLeft = "20px";
-    this.container.appendChild(descriptionCountry);
+    const countryDescription = document.createElement("div");
+    countryDescription.className = "countryDescription";
+    countryDescription.style.marginLeft = "20px";
+    this.container.appendChild(countryDescription);
 
     const countryName = document.createElement("div");
     countryName.className = "countryName";
     countryName.innerHTML = this.name;
-    descriptionCountry.appendChild(countryName);
+    countryDescription.appendChild(countryName);
 
     const nfObject = new Intl.NumberFormat('en-US');
-    this.drawTextDescription(descriptionCountry, "Population:", nfObject.format(this.population));
-    this.drawTextDescription(descriptionCountry, "Region:", this.region);
-    this.drawTextDescription(descriptionCountry, "Capital:", this.capital);
+    this.drawTextDescription(countryDescription, "Population:", nfObject.format(this.population));
+    this.drawTextDescription(countryDescription, "Region:", this.region);
+    this.drawTextDescription(countryDescription, "Capital:", this.capital);
     host.appendChild(this.container);
 
     this.container.addEventListener("click", async () => {
@@ -100,7 +100,7 @@ export class Country {
 
   drawSingleCountry(host, countryData, listOfBorders) {
     const backButton = document.createElement("button");
-    backButton.className = "backButton backBtn";
+    backButton.className = "backButton";
     backButton.style.marginTop = "3rem";
     backButton.innerHTML = "← Back";
     host.appendChild(backButton);
@@ -130,45 +130,34 @@ export class Country {
     countryName.innerHTML = countryData.name.common;
     countryDescriptionDiv.appendChild(countryName);
 
-    const leftRightDescription = document.createElement("div");
-    leftRightDescription.className = "leftRightDescription";
+    const moreAboutCounty = document.createElement("div");
+    moreAboutCounty.className = "moreAboutCounty";
 
     const textDescriptionDiv = document.createElement("div");
     textDescriptionDiv.className = "textDescriptionDiv";
     countryDescriptionDiv.appendChild(textDescriptionDiv);
 
-    const nameDescription = document.createElement("div");
-    nameDescription.className = "nameDescription";
-    nameDescription.innerHTML = "Native Name: ";
-    textDescriptionDiv.appendChild(nameDescription);
-
-    const divOverFlow = document.createElement("div");
-    divOverFlow.className = "divOverFlow";
-    divOverFlow.innerHTML = countryData.name.official;
-    textDescriptionDiv.appendChild(divOverFlow);
-
-    divOverFlow.addEventListener("click", () => {
-      divOverFlow.classList.toggle("expanded");
-    });
-    countryDescriptionDiv.appendChild(leftRightDescription);
+    countryDescriptionDiv.appendChild(moreAboutCounty);
 
     const leftDescription = document.createElement("div");
     leftDescription.className = "leftDescription";
-    leftRightDescription.appendChild(leftDescription);
+    moreAboutCounty.appendChild(leftDescription);
     const nfObject = new Intl.NumberFormat('en-US');
 
+    console.log("sub", countryData.currencies)
+    this.drawTextDescription(leftDescription, "Native Name: ", countryData.name.official);
     this.drawTextDescription(leftDescription, "Population: ", nfObject.format(countryData.population));
-    this.drawTextDescription(leftDescription, "Region: ", countryData.region);
-    this.drawTextDescription(leftDescription, "Sub Region: ", countryData.subregion);
-    this.drawTextDescription(leftDescription, "Capital: ", countryData.capital);
+    this.drawTextDescription(leftDescription, "Region: ", countryData.region || "NA");
+    this.drawTextDescription(leftDescription, "Sub Region: ", countryData.subregion || "NA");
+    this.drawTextDescription(leftDescription, "Capital: ", countryData.capital.length === 0 ? "NA" : countryData.capital);
 
     const rightDescription = document.createElement("div");
     rightDescription.className = "rightDescription";
-    leftRightDescription.appendChild(rightDescription);
+    moreAboutCounty.appendChild(rightDescription);
 
-    this.drawTextDescription(rightDescription, "Top Level Domain: ", countryData.tld.join(', '));
-    this.drawTextDescription(rightDescription, "Currencies: ", Object.values(countryData.currencies).map(c => c.name).join(', '));
-    this.drawTextDescription(rightDescription, "Languages: ", Object.values(countryData.languages).join(', '));
+    this.drawTextDescription(rightDescription, "Top Level Domain: ", countryData.tld.join(', ') || "NA");
+    this.drawTextDescription(rightDescription, "Currencies: ", Object.values(countryData.currencies).map(c => c.name).join(', ') || "NA");
+    this.drawTextDescription(rightDescription, "Languages: ", Object.values(countryData.languages).join(', ') || "NA");
 
     const borderCountriesDiv = document.createElement("div");
     borderCountriesDiv.className = "borderCountriesDiv";
@@ -179,12 +168,18 @@ export class Country {
     borderCountriesName.innerHTML = "Border Countries: ";
     borderCountriesDiv.appendChild(borderCountriesName);
 
-    listOfBorders.forEach(element => { this.drawBorderCountry(borderCountriesDiv, element); });
+    if (listOfBorders.length === 0) {
+      const noBordersText = document.createElement("div");
+      noBordersText.className = "valueDescription";
+      noBordersText.innerHTML = "There are no countries bordering this one";
+      borderCountriesDiv.appendChild(noBordersText);
+    }
+    else { listOfBorders.forEach(element => { this.drawBorderCountry(borderCountriesDiv, element); }); }
   }
 
   drawBorderCountry(host, countryName) {
     const countyNameDiv = document.createElement("button");
-    countyNameDiv.className = "backButton countryButton";
+    countyNameDiv.className = "backButton borderCountryButton";
     countyNameDiv.innerHTML = countryName;
     host.appendChild(countyNameDiv);
 

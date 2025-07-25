@@ -11,7 +11,7 @@ let pageSize;
 let isLastPage = false;
 let filteredCounties = [];
 let currentPageWidth;
-  
+
 function onScroll() {
   let currentScroll = window.innerHeight + window.scrollY;
   let height = document.body.offsetHeight;
@@ -26,12 +26,12 @@ window.addEventListener("scroll", onScroll);
 
 
 async function main() {
-  
- const loader = document.createElement("div");
+
+  const loader = document.createElement("div");
   loader.className = "loader";
 
   document.body.appendChild(loader);
-  
+
   updatePageSize();
   await fetchData(countries, regions);
 
@@ -61,13 +61,13 @@ function drawBody(host) {
   countryListDiv.className = "countryListDiv";
   host.appendChild(countryListDiv);
 
-  const findCountryDiv = document.createElement("div");
-  findCountryDiv.className = "findCountryDiv";
-  countryListDiv.appendChild(findCountryDiv);
+  const countrySearchContainer = document.createElement("div");
+  countrySearchContainer.className = "countrySearchContainer";
+  countryListDiv.appendChild(countrySearchContainer);
 
   const countryDiv = document.createElement("div");
   countryDiv.className = "countryDiv";
-  drawFilter(findCountryDiv, countryDiv);
+  drawFilter(countrySearchContainer, countryDiv);
 
   countryListDiv.appendChild(countryDiv);
 
