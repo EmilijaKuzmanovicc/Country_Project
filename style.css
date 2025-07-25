@@ -220,6 +220,7 @@ body {
 .borderCountryButton {
   margin-right: 15px;
   margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 14px;
 }
 .borderCountryButton:hover {
@@ -231,12 +232,13 @@ body {
   text-align: center;
   justify-items: center;
   flex-direction: row;
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
   min-width: 400px;
 }
 .borderCountriesName {
-  margin-bottom: 0.2rem;
+  /* margin-bottom: 0.2rem; */
   margin-left: 0.2rem;
+   margin-right: 1rem;
   display: inline-flex;
   flex-wrap: wrap;
   text-align: center;
@@ -346,5 +348,8 @@ body {
   }
   .backButton {
     margin-left: 10px;
+  }
+  .borderCountryButton {
+    margin-left: 0;
   }
 }

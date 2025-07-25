@@ -1,4 +1,5 @@
 import { fetchCountryByName, fetchBordersCountries } from "../fetchData.js";
+import { createButton } from "../components/button.js";
 export const countries = [];
 export const regions = new Set();
 let currentSelected = "";
@@ -110,18 +111,18 @@ export class Country {
   }
 
   drawSingleCountry(host, countryData, listOfBorders) {
-    const backButton = document.createElement("button");
-    backButton.className = "backButton";
-    backButton.style.marginTop = "3rem";
-    backButton.innerHTML = "← Back";
-    host.appendChild(backButton);
 
-    backButton.addEventListener("click", () => {
-
-      host.style.display = "none";
-      const divBody = document.querySelector(".divBody");
-      divBody.style.display = "block";
+    console.log("backButton")
+   const backButton = createButton({
+      text: "← Back",
+      className: "backButton",
+      onClick: () => {
+        host.style.display = "none";
+        document.querySelector(".divBody").style.display = "block";
+      },
     });
+     backButton.style.marginTop = "3rem";
+    host.appendChild(backButton)
 
     const singleCountryDiv = document.createElement("div");
     singleCountryDiv.className = "singleCountryDiv";
@@ -189,12 +190,12 @@ export class Country {
   }
 
   drawBorderCountry(host, countryName) {
-    const countyNameDiv = document.createElement("button");
-    countyNameDiv.className = "backButton borderCountryButton";
-    countyNameDiv.innerHTML = countryName;
-    host.appendChild(countyNameDiv);
-
-    countyNameDiv.addEventListener("click", async () => { this.loadCountryData(countryName); });
+   const borderBtn = createButton({
+      text: countryName,
+      className: "backButton borderCountryButton",
+      onClick: () => this.loadCountryData(countryName),
+    });
+    host.appendChild(borderBtn);
   }
 }
 function drawFilter(host, countyC) {
