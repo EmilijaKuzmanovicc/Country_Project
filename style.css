@@ -81,7 +81,7 @@ body {
 .valueDescription {
   text-align: start;
   justify-content: start;
- white-space: nowrap;
+  white-space: nowrap;
   flex-shrink: 0;
   display: flex;
   width: 250px;
@@ -120,7 +120,6 @@ body {
 .rightDescription {
   display: inline-block;
   width: 380px;
-  /* flex: 1; */
 }
 .countryListDiv {
   display: flex;
@@ -131,7 +130,7 @@ body {
   overflow-y: auto;
 }
 .searchInput {
-  margin: 10px ;
+  margin: 10px;
   background-color: var(--base-color);
   color: var(--text-color);
   padding: 8px;
@@ -186,7 +185,6 @@ body {
   flex-direction: row;
 }
 .countryDescriptionDiv {
-  
   padding: 1rem;
   text-align: start;
   align-items: start;
@@ -214,7 +212,7 @@ body {
   box-shadow: 0 2px 6px rgba(241, 66, 66, 0.1);
 }
 .backButton:hover {
-  background-color:var(--base-variant);
+  background-color: var(--base-variant);
   box-shadow: 0 0 8px rgba(200, 220, 233, 0.4);
 }
 .borderCountryButton {
@@ -232,13 +230,11 @@ body {
   text-align: center;
   justify-items: center;
   flex-direction: row;
-  /* padding-top: 1rem; */
   min-width: 400px;
 }
 .borderCountriesName {
-  /* margin-bottom: 0.2rem; */
   margin-left: 0.2rem;
-   margin-right: 1rem;
+  margin-right: 1rem;
   display: inline-flex;
   flex-wrap: wrap;
   text-align: center;
@@ -254,15 +250,6 @@ body {
   gap: 10px;
   padding: 20px;
   box-sizing: border-box;
-   /* justify-content: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: auto; */
- 
 }
 .notFoundDiv {
   width: 100%;
@@ -307,13 +294,9 @@ body {
     transform: rotate(1turn);
   }
 }
-/* @media (max-width: 1280) {
-  .moreAboutCounty {
-    flex-direction: column;
-  }
-} */
 @media (max-width: 800px) {
-  .singleCountryDiv,.moreAboutCounty {
+  .singleCountryDiv,
+  .moreAboutCounty {
     flex-direction: column;
   }
   .imgCountryBig {
@@ -334,7 +317,7 @@ body {
     justify-items: center;
     align-items: center;
   }
- 
+
   .searchInput {
     width: 95%;
   }
@@ -344,7 +327,7 @@ body {
   }
   .countryDescriptionDiv {
     padding: 0rem;
-     flex: 1; 
+    flex: 1;
   }
   .backButton {
     margin-left: 10px;

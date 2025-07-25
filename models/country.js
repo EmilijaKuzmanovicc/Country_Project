@@ -230,6 +230,7 @@ function drawFilter(host, countyC) {
     countyC.innerHTML = "";
     currentPage = 0;
     isLastPage = false;
+    currentSelected = select.value; 
     filteredCountiesFunction(select.value, currentSearch);
     drawCountyFunc(countyC);
   });

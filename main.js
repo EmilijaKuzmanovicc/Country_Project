@@ -1,11 +1,6 @@
 import { fetchData } from "./fetchData.js";
 import { drawNavbar } from "./models/navBar.js";
-import { countries,regions,drawBody,updatePageSize } from "./models/country.js";
-
-
-
-
-
+import { countries, regions, drawBody, updatePageSize } from "./models/country.js";
 
 async function main() {
 
@@ -22,7 +17,6 @@ async function main() {
   }
 
   drawNavbar(document.body);
-
 
   const singleCountyBody = document.createElement("div");
   singleCountyBody.className = "singleCountyBody";
