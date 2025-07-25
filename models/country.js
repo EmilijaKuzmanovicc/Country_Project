@@ -1,5 +1,15 @@
 import { fetchCountryByName, fetchBordersCountries } from "../fetchData.js";
+export const countries = [];
+export const regions = new Set();
+let currentSelected = "";
+let currentSearch = "";
+let debounceTimer;
 
+let currentPage = 0;
+let pageSize;
+let isLastPage = false;
+let filteredCounties = [];
+let currentPageWidth;
 export class Country {
   constructor(data) {
     this.officialName = data.officialName ?? null;
@@ -50,10 +60,11 @@ export class Country {
     countryName.innerHTML = this.name;
     countryDescription.appendChild(countryName);
 
+    console.log("region",this.capital);
     const nfObject = new Intl.NumberFormat('en-US');
     this.drawTextDescription(countryDescription, "Population:", nfObject.format(this.population));
-    this.drawTextDescription(countryDescription, "Region:", this.region);
-    this.drawTextDescription(countryDescription, "Capital:", this.capital);
+    this.drawTextDescription(countryDescription, "Region:", this.region|| "NA");
+    this.drawTextDescription(countryDescription, "Capital:", this.capital.length === 0 ? "NA" : this.capital);
     host.appendChild(this.container);
 
     this.container.addEventListener("click", async () => {
@@ -186,3 +197,146 @@ export class Country {
     countyNameDiv.addEventListener("click", async () => { this.loadCountryData(countryName); });
   }
 }
+function drawFilter(host, countyC) {
+
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = " Search...";
+  searchInput.className = "searchInput";
+  host.appendChild(searchInput);
+
+  const select = document.createElement("select");
+  select.className = "selectDiv";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Filter by region";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  select.appendChild(defaultOption);
+
+
+  regions.forEach(region => {
+    const option = document.createElement("option");
+    option.value = region;
+    option.textContent = region;
+    select.appendChild(option);
+  });
+  host.appendChild(select);
+
+  select.addEventListener("change", () => {
+    console.log("chaged region");
+    countyC.innerHTML = "";
+    currentPage = 0;
+    isLastPage = false;
+    filteredCountiesFunction(select.value, currentSearch);
+    drawCountyFunc(countyC);
+  });
+
+  searchInput.addEventListener("input", (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      currentPage = 0;
+      currentSearch = e.target.value.trim();
+      countyC.innerHTML = "";
+      isLastPage = false;
+      filteredCountiesFunction(currentSelected, currentSearch);
+      drawCountyFunc(countyC);
+    }, 100);
+  });
+}
+export function drawBody(host) {
+  const countryListDiv = document.createElement("div");
+  countryListDiv.className = "countryListDiv";
+  host.appendChild(countryListDiv);
+
+  const countrySearchContainer = document.createElement("div");
+  countrySearchContainer.className = "countrySearchContainer";
+  countryListDiv.appendChild(countrySearchContainer);
+
+  const countryDiv = document.createElement("div");
+  countryDiv.className = "countryDiv";
+  drawFilter(countrySearchContainer, countryDiv);
+
+  countryListDiv.appendChild(countryDiv);
+
+  const notFoundDiv = document.createElement("div");
+  notFoundDiv.className = "notFoundDiv";
+  notFoundDiv.innerHTML = "Sorry, no matches for the entered values.";
+  notFoundDiv.style.display = "none";
+  countryListDiv.appendChild(notFoundDiv);
+
+  filteredCountiesFunction(currentSelected, currentSearch);
+  drawCountyFunc(countryDiv);
+}
+
+
+function filteredCountiesFunction(region, searchText) {
+  filteredCounties = [];
+
+  console.log(countries);
+  countries.forEach(e => {
+    const matchRegion = region === "" || e.region === region;
+    const matchSearch = searchText === "" || e.name?.toLowerCase().includes(searchText.toLowerCase());
+
+    
+    if (matchRegion && matchSearch) { filteredCounties.push(e); }
+  });
+}
+
+function drawCountyFunc(host) {
+  const notFoundDiv = document.querySelector(".notFoundDiv");
+
+  if (filteredCounties.length === 0) { notFoundDiv.style.display = "block"; }
+  else {
+    notFoundDiv.style.display = "none";
+
+    if (!isLastPage) {
+      const startIndex = currentPage;
+      const endIndex = currentPage + pageSize;
+      let firstCountries = [];
+
+      if (filteredCounties.length < endIndex) {
+        firstCountries = [...filteredCounties];
+        isLastPage = true;
+      }
+      else {
+        firstCountries = filteredCounties.slice(startIndex, endIndex);
+        currentPage += pageSize;
+      }
+
+      firstCountries.forEach(country => {
+        country.drawCountry(host);
+      });
+    }
+  }
+}
+
+export function updatePageSize() {
+  pageSize = 8;
+
+  if (window.innerWidth < 1400) { pageSize = 6; }
+  else if (window.innerWidth < 510) { pageSize = 3; }
+
+}
+
+window.addEventListener('resize', function () {
+  currentPageWidth = window.innerWidth;
+  pageSize = 8;
+  if (window.innerWidth < 1400) { pageSize = 6; }
+  else if (window.innerWidth < 510) { pageSize = 3; }
+});
+
+
+
+
+function onScroll() {
+  let currentScroll = window.innerHeight + window.scrollY;
+  let height = document.body.offsetHeight;
+  if (currentScroll >= height) {
+    const countryDiv = document.querySelector(".countryDiv");
+    drawCountyFunc(countryDiv);
+  };
+};
+
+window.addEventListener("scroll", onScroll);
