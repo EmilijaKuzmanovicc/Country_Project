@@ -62,26 +62,46 @@ body {
   padding: 4px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   gap: 10px;
+}
+.textDescriptionDiv {
+  text-align: center;
+  align-items: start;
 }
 .darkModeDiv:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
 .nameDescription {
-  display: inline-block;
   white-space: nowrap;
   flex-shrink: 0;
   font-size: 16px;
   font-weight: 900;
 }
 .valueDescription {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 3px;
   display: inline-block;
+  justify-content: start;
   white-space: nowrap;
   flex-shrink: 0;
   font-size: 14px;
   font-weight: 100;
+}
+.divOverFlow {
+  margin-top: 3px;
+    font-size: 14px;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+  text-align: start;
+  display: flex;
+}
+.divOverFlow.expanded {
+  display: flex;
+  white-space: normal;
+  display: block;
+  word-wrap: break-word;
 }
 .countryName {
   margin: 12px 0;
@@ -112,7 +132,6 @@ body {
 .rightDescription {
   display: inline-block;
   flex: 1;
-  min-width: 350px;
 }
 .countryListDiv {
   background-color: var(--base-variant);
@@ -302,6 +321,14 @@ body {
     justify-content: start;
     width: 100%;
   }
+  .divOverFlow {
+  display: inline-block;
+  cursor: pointer;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 }
 @media (max-width: 500px) {
   .navbar,
@@ -326,5 +353,8 @@ body {
   .countryDescriptionDiv {
     padding: 0rem;
     flex: 0;
+  }
+  .backButton{
+    margin-left: 10px;
   }
 }

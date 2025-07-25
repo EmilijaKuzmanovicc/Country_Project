@@ -42,7 +42,7 @@ export class Country {
 
     const descriptionCountry = document.createElement("div");
     descriptionCountry.className = "descriptionCountry";
-    descriptionCountry.style.marginLeft="20px";
+    descriptionCountry.style.marginLeft = "20px";
     this.container.appendChild(descriptionCountry);
 
     const countryName = document.createElement("div");
@@ -50,7 +50,8 @@ export class Country {
     countryName.innerHTML = this.name;
     descriptionCountry.appendChild(countryName);
 
-    this.drawTextDescription(descriptionCountry, "Population:", this.population);
+    const nfObject = new Intl.NumberFormat('en-US');
+    this.drawTextDescription(descriptionCountry, "Population:", nfObject.format(this.population));
     this.drawTextDescription(descriptionCountry, "Region:", this.region);
     this.drawTextDescription(descriptionCountry, "Capital:", this.capital);
     host.appendChild(this.container);
@@ -81,7 +82,7 @@ export class Country {
     this.drawSingleCountry(singleCountyBody, countryData, listOfBorders);
   }
 
-  drawTextDescription(host, name, value) {
+  drawTextDescription(host, name, value, divOverFlow = "") {
     const textDescriptionDiv = document.createElement("div");
     textDescriptionDiv.className = "textDescriptionDiv";
     host.appendChild(textDescriptionDiv);
@@ -100,7 +101,7 @@ export class Country {
   drawSingleCountry(host, countryData, listOfBorders) {
     const backButton = document.createElement("button");
     backButton.className = "backButton backBtn";
-    backButton.style.marginTop="3rem";
+    backButton.style.marginTop = "3rem";
     backButton.innerHTML = "← Back";
     host.appendChild(backButton);
 
@@ -132,21 +133,37 @@ export class Country {
     const leftRightDescription = document.createElement("div");
     leftRightDescription.className = "leftRightDescription";
 
+    const textDescriptionDiv = document.createElement("div");
+    textDescriptionDiv.className = "textDescriptionDiv";
+    countryDescriptionDiv.appendChild(textDescriptionDiv);
+
+    const nameDescription = document.createElement("div");
+    nameDescription.className = "nameDescription";
+    nameDescription.innerHTML = "Native Name: ";
+    textDescriptionDiv.appendChild(nameDescription);
+
+    const divOverFlow = document.createElement("div");
+    divOverFlow.className = "divOverFlow";
+    divOverFlow.innerHTML = countryData.name.official;
+    textDescriptionDiv.appendChild(divOverFlow);
+
+    divOverFlow.addEventListener("click", () => {
+      divOverFlow.classList.toggle("expanded");
+    });
     countryDescriptionDiv.appendChild(leftRightDescription);
 
     const leftDescription = document.createElement("div");
     leftDescription.className = "leftDescription";
     leftRightDescription.appendChild(leftDescription);
+    const nfObject = new Intl.NumberFormat('en-US');
 
-    this.drawTextDescription(leftDescription, "Native Name: ", countryData.name.official);
-    this.drawTextDescription(leftDescription, "Population: ", countryData.population);
+    this.drawTextDescription(leftDescription, "Population: ", nfObject.format(countryData.population));
     this.drawTextDescription(leftDescription, "Region: ", countryData.region);
     this.drawTextDescription(leftDescription, "Sub Region: ", countryData.subregion);
     this.drawTextDescription(leftDescription, "Capital: ", countryData.capital);
 
     const rightDescription = document.createElement("div");
     rightDescription.className = "rightDescription";
-    rightDescription.style.paddingTop="1.8rem";
     leftRightDescription.appendChild(rightDescription);
 
     this.drawTextDescription(rightDescription, "Top Level Domain: ", countryData.tld.join(', '));
