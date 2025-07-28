@@ -1,6 +1,6 @@
 export function drawNavbar(host) {
 
-   const navbar = document.createElement("nav");
+  const navbar = document.createElement("nav");
   navbar.className = "navbar ";
   host.appendChild(navbar);
 
@@ -9,7 +9,7 @@ export function drawNavbar(host) {
   headLine.innerHTML = "Where in the world?";
   headLine.style.fontWeight = "bold";
   headLine.style.fontSize = "20px";
-  headLine.style.marginLeft="1rem";
+  headLine.style.marginLeft = "1rem";
   navbar.appendChild(headLine);
 
   const darkModeDiv = document.createElement("div");

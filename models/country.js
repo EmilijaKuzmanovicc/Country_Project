@@ -46,10 +46,10 @@ export class Country {
   drawCountry(host) {
     this.container = document.createElement("div");
     this.container.className = "containerCountry";
-    const imgCountrySmall = document.createElement("img");
-    imgCountrySmall.className = "imgCountrySmall";
-    imgCountrySmall.src = this.flag;
-    this.container.appendChild(imgCountrySmall);
+    const countryImgSmall = document.createElement("img");
+    countryImgSmall.className = "countryImgSmall";
+    countryImgSmall.src = this.flag;
+    this.container.appendChild(countryImgSmall);
 
     const countryDescription = document.createElement("div");
     countryDescription.className = "countryDescription";
@@ -61,10 +61,9 @@ export class Country {
     countryName.innerHTML = this.name;
     countryDescription.appendChild(countryName);
 
-    console.log("region",this.capital);
     const nfObject = new Intl.NumberFormat('en-US');
     this.drawTextDescription(countryDescription, "Population:", nfObject.format(this.population));
-    this.drawTextDescription(countryDescription, "Region:", this.region|| "NA");
+    this.drawTextDescription(countryDescription, "Region:", this.region || "NA");
     this.drawTextDescription(countryDescription, "Capital:", this.capital.length === 0 ? "NA" : this.capital);
     host.appendChild(this.container);
 
@@ -94,7 +93,7 @@ export class Country {
     this.drawSingleCountry(singleCountyBody, countryData, listOfBorders);
   }
 
-  drawTextDescription(host, name, value, divOverFlow = "") {
+  drawTextDescription(host, name, value) {
     const textDescriptionDiv = document.createElement("div");
     textDescriptionDiv.className = "textDescriptionDiv";
     host.appendChild(textDescriptionDiv);
@@ -111,9 +110,7 @@ export class Country {
   }
 
   drawSingleCountry(host, countryData, listOfBorders) {
-
-    console.log("backButton")
-   const backButton = createButton({
+    const backButton = createButton({
       text: "← Back",
       className: "backButton",
       onClick: () => {
@@ -121,17 +118,17 @@ export class Country {
         document.querySelector(".divBody").style.display = "block";
       },
     });
-     backButton.style.marginTop = "3rem";
+    backButton.style.marginTop = "3rem";
     host.appendChild(backButton)
 
     const singleCountryDiv = document.createElement("div");
     singleCountryDiv.className = "singleCountryDiv";
     host.appendChild(singleCountryDiv);
 
-    const imgCountryBig = document.createElement("img");
-    imgCountryBig.className = "imgCountryBig";
-    imgCountryBig.src = countryData.flags.svg;
-    singleCountryDiv.appendChild(imgCountryBig);
+    const countryImgBig = document.createElement("img");
+    countryImgBig.className = "countryImgBig";
+    countryImgBig.src = countryData.flags.svg;
+    singleCountryDiv.appendChild(countryImgBig);
 
     const countryDescriptionDiv = document.createElement("div");
     countryDescriptionDiv.className = "countryDescriptionDiv";
@@ -156,7 +153,6 @@ export class Country {
     moreAboutCounty.appendChild(leftDescription);
     const nfObject = new Intl.NumberFormat('en-US');
 
-    console.log("sub", countryData.currencies)
     this.drawTextDescription(leftDescription, "Native Name: ", countryData.name.official);
     this.drawTextDescription(leftDescription, "Population: ", nfObject.format(countryData.population));
     this.drawTextDescription(leftDescription, "Region: ", countryData.region || "NA");
@@ -182,15 +178,15 @@ export class Country {
 
     if (listOfBorders.length === 0) {
       const noBordersText = document.createElement("div");
-      noBordersText.className = "valueDescription";
-      noBordersText.innerHTML = "There are no countries bordering this one";
+      noBordersText.className = "noBordersText";
+      noBordersText.innerHTML = "There are no countries bordering this one.";
       borderCountriesDiv.appendChild(noBordersText);
     }
     else { listOfBorders.forEach(element => { this.drawBorderCountry(borderCountriesDiv, element); }); }
   }
 
   drawBorderCountry(host, countryName) {
-   const borderBtn = createButton({
+    const borderBtn = createButton({
       text: countryName,
       className: "backButton borderCountryButton",
       onClick: () => this.loadCountryData(countryName),
@@ -198,6 +194,7 @@ export class Country {
     host.appendChild(borderBtn);
   }
 }
+
 function drawFilter(host, countyC) {
 
   const searchInput = document.createElement("input");
@@ -226,11 +223,10 @@ function drawFilter(host, countyC) {
   host.appendChild(select);
 
   select.addEventListener("change", () => {
-    console.log("chaged region");
     countyC.innerHTML = "";
     currentPage = 0;
     isLastPage = false;
-    currentSelected = select.value; 
+    currentSelected = select.value;
     filteredCountiesFunction(select.value, currentSearch);
     drawCountyFunc(countyC);
   });
@@ -247,6 +243,7 @@ function drawFilter(host, countyC) {
     }, 100);
   });
 }
+
 export function drawBody(host) {
   const countryListDiv = document.createElement("div");
   countryListDiv.className = "countryListDiv";
@@ -272,7 +269,6 @@ export function drawBody(host) {
   drawCountyFunc(countryDiv);
 }
 
-
 function filteredCountiesFunction(region, searchText) {
   filteredCounties = [];
 
@@ -281,7 +277,7 @@ function filteredCountiesFunction(region, searchText) {
     const matchRegion = region === "" || e.region === region;
     const matchSearch = searchText === "" || e.name?.toLowerCase().includes(searchText.toLowerCase());
 
-    
+
     if (matchRegion && matchSearch) { filteredCounties.push(e); }
   });
 }
@@ -315,22 +311,18 @@ function drawCountyFunc(host) {
 }
 
 export function updatePageSize() {
-  pageSize = 8;
+   pageSize = 8;
 
   if (window.innerWidth < 1400) { pageSize = 6; }
   else if (window.innerWidth < 510) { pageSize = 3; }
-
 }
 
 window.addEventListener('resize', function () {
-  currentPageWidth = window.innerWidth;
+ currentPageWidth = window.innerWidth;
   pageSize = 8;
   if (window.innerWidth < 1400) { pageSize = 6; }
   else if (window.innerWidth < 510) { pageSize = 3; }
 });
-
-
-
 
 function onScroll() {
   let currentScroll = window.innerHeight + window.scrollY;

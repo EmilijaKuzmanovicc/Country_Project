@@ -42,13 +42,13 @@ body {
   cursor: pointer;
   transition: transform 0.9s ease;
 }
-.imgCountrySmall {
+.countryImgSmall {
   width: 320px;
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
 }
-.imgCountryBig {
+.countryImgBig {
   flex: 1;
   width: 400px;
   height: auto;
@@ -225,6 +225,7 @@ body {
   transform: scale(1.1);
 }
 .borderCountriesDiv {
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   text-align: center;
@@ -299,7 +300,7 @@ body {
   .moreAboutCounty {
     flex-direction: column;
   }
-  .imgCountryBig {
+  .countryImgBig {
     width: 400px;
   }
   .borderCountriesName {
@@ -335,4 +336,8 @@ body {
   .borderCountryButton {
     margin-left: 0;
   }
+}
+.noBordersText{
+  margin: 3px;
+  display: flex;
 }

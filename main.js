@@ -3,10 +3,8 @@ import { drawNavbar } from "./models/navBar.js";
 import { countries, regions, drawBody, updatePageSize } from "./models/country.js";
 
 async function main() {
-
   const loader = document.createElement("div");
   loader.className = "loader";
-
   document.body.appendChild(loader);
 
   updatePageSize();
@@ -31,8 +29,3 @@ async function main() {
 }
 
 main();
-
-
-
-
-
